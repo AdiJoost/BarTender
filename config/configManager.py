@@ -2,7 +2,7 @@ import json
 import copy
 from pathlib import Path
 from config.rootPath import getRootPath
-from config.configNames import ConfigNames
+from config.configFiles import ConfigFiles
 
 CONFIG_FOLDER = "config"
 
@@ -18,8 +18,8 @@ with open(getRootPath().joinpath(CONFIG_FOLDER, "applicationConfig.json"), "r") 
 def loadConfig():
     return "Hello"
 
-def getConfig(name: str, config: ConfigNames=ConfigNames.APPLICATION_CONFIG) -> any:
-    if config == ConfigNames.APPLICATION_CONFIG:
+def getConfig(name: str, config: ConfigFiles=ConfigFiles.APPLICATION_CONFIG) -> any:
+    if config == ConfigFiles.APPLICATION_CONFIG:
         return _getConfig(name, application_config)
 
 def _getConfig(name:str, config: dict) -> any:

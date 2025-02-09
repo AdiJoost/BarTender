@@ -1,4 +1,4 @@
 from enum import Enum, auto
 
-class ConfigNames(Enum):
+class ConfigFiles(Enum):
     APPLICATION_CONFIG = auto(),
