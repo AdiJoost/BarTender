@@ -49,3 +49,10 @@ class Logger():
     def getChattyLevel(cls) -> LogLevel:
         return cls.chattyLevel
 
+    @classmethod
+    def setLogLevel(cls, logLevel: LogLevel) -> None:
+        cls.logLevel = logLevel
+
+    @classmethod
+    def setChattyLevel(cls, chattyLevel: LogLevel) -> None:
+        cls.chattyLevel = chattyLevel
