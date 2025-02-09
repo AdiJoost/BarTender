@@ -5,5 +5,5 @@ To enable the setup, adjust the rootFolder in the ./config/rootPath.py file to y
 ## create the docker file
 In the Dockerfile, set the workdir to your rootFolder name
 
-'docker build -t <your_app_name> .'
-'docker run --env-file=dockerEnvironmentVariables.env <your_app_name>'
+`docker build -t <your_app_name> .`
+`docker run --env-file=dockerEnvironmentVariables.env <your_app_name>`
