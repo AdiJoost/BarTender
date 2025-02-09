@@ -7,7 +7,7 @@ class Logger():
     logLevel = LogLevel[getConfig("logLevel")]
     chattyLevel = LogLevel[getConfig("chattyLevel")]
 
-    def __init__(self, filename: str="application_log", loggerName: str="Logger") -> None:
+    def __init__(self, filename: str="application", loggerName: str="Logger") -> None:
         self.filename = filename
         self.loggerName = loggerName
         self.filepath = getRootPath().joinpath("log", f"{filename}.log")
