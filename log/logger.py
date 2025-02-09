@@ -7,8 +7,9 @@ class Logger():
     logLevel = LogLevel[getConfig("logLevel")]
     chattyLevel = LogLevel[getConfig("chattyLevel")]
 
-    def __init__(self, filename: str) -> None:
+    def __init__(self, filename: str="application_log", loggerName: str="Logger") -> None:
         self.filename = filename
+        self.loggerName = loggerName
         self.filepath = getRootPath().joinpath("log", f"{filename}.log")
 
     def debug(self, message) -> None:
@@ -38,7 +39,7 @@ class Logger():
     def _log(self, message: str, level: str) -> None:
         now = datetime.now()
         with open(self.filepath, "a", encoding="UTF-8") as file:
-            file.write(f"[{now}]{level}:{message}\n")
+            file.write(f"[{now}]{self.loggerName}.{level}:{message}\n")
 
     @classmethod
     def getLogLevel(cls) -> LogLevel:

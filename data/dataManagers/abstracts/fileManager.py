@@ -27,7 +27,7 @@ class FileManager():
         configValue = getConfig(name=self.CONFIG_FIELD)
         overwriteMechanism: OverwriteMechanism = None
         if not configValue:
-            overwriteMechanism = OverwriteMechanism.RECREATE
+            overwriteMechanism = OverwriteMechanism.OVERWRITE
         else:
             overwriteMechanism = OverwriteMechanism[configValue]
         if overwriteMechanism == OverwriteMechanism.OVERWRITE:
