@@ -171,3 +171,6 @@ cython_debug/
 .pypirc
 
 ./log/*.log
+./data/*.csv
+./data/*.json
+./data/*.pickle

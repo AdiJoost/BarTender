@@ -10,7 +10,7 @@ CONFIG_FOLDER = "config"
 application_config = {}
 
 
-with open(getRootPath().joinpath(CONFIG_FOLDER, "applicationConfig.json"), "r") as file:
+with open(getRootPath().joinpath(CONFIG_FOLDER, "applicationConfig/applicationConfig.json"), "r") as file:
     application_config = json.load(file)
 
 
