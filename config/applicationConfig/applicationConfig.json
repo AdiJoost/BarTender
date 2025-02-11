@@ -1,6 +1,7 @@
 {
-    "applicationName": "example",
+    "applicationName": "BarTender",
      "logLevel": "INFO",
      "chattyLevel": "INFO",
-     "overwriteMechanism":"APPEND"
+     "overwriteMechanism":"OVERWRITE",
+     "PORT": 6969
 }
