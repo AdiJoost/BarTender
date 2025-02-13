@@ -3,9 +3,5 @@
      "logLevel": "INFO",
      "chattyLevel": "INFO",
      "overwriteMechanism":"OVERWRITE",
-     "PORT": 6969,
-     "MONGO_DB_HOST": "localhost",
-     "MONGO_DB_PORT": "27017",
-     "MONGO_DB_USERNAME": "root",
-     "MONGO_DB_PASSWORD": "example"
+     "PORT": 6969
 }
