@@ -10,6 +10,6 @@ The template has a file for loading environment variables into the docker contai
 In the Dockerfile, set the workdir to your rootFolder name
 
 ### Create the docker image
-    docker build -t <your_app_name> .
+    docker build -t bar_tender .
 ### Run the container with the environments variables
-    docker run --env-file=dockerEnvironmentVariables.env <your_app_name>
+    docker run -d --env-file=dockerEnvironmentVariables.env -p 6969:6969 bar_tender
