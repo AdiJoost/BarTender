@@ -1,0 +1,32 @@
+swagger: "2.0"
+info:
+  title: "Pump API"
+  description: "API for managing pumps"
+  version: "1.0"
+
+paths:
+  /pump:
+    post:
+      summary: "Create a new pump"
+      tags:
+        - "Pump"
+      parameters:
+        - name: "pump_id"
+          in: "path"
+          type: "string"
+          required: true
+        - name: "body"
+          in: "body"
+          required: true
+          schema:
+            type: "object"
+            properties:
+              name:
+                type: "string"
+              status:
+                type: "string"
+      responses:
+        201:
+          description: "Pump created"
+        400:
+          description: "Invalid request"
