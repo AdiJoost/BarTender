@@ -16,6 +16,10 @@ def saveDocument(document: dict, databaseName: str, collectionName: str) -> any:
         return _insertDocument(document, databaseName, collectionName)
     else:
         return _updateDocument(document, databaseName, collectionName)
+    
+def deleteDocument(objectId: ObjectId, databaseName: str, collectionName: str) -> None:
+    collection = _getCollection(databaseName=databaseName, collectionName=collectionName)
+    collection.delete_one({"_id": objectId})
 
 def _insertDocument(document: dict, databaseName: str, collectionName: str) -> any:
     collection = _getCollection(databaseName=databaseName, collectionName=collectionName)

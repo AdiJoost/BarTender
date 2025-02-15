@@ -3,7 +3,7 @@ from config.configFiles import ConfigFiles
 from config.configManager import getConfig
 from config.mongoDBConfig.mongoDbConfigFields import MongoDBConfigFields
 
-from src.adapters.database_utils import getDocumentById, saveDocument
+from src.adapters.database_utils import deleteDocument, getDocumentById, saveDocument
 
 
 class PumpModel():
@@ -58,7 +58,7 @@ class PumpModel():
             self.PUMP_TYPE_FIELD_NAME: self._pumpType
         }
         if self._id is not None:
-            values["_id"] = self._id
+            values["_id"] = str(self._id)
         return values
 
     def save(self) -> None:
@@ -76,3 +76,9 @@ class PumpModel():
         if result is None:
             return None
         return PumpModel(**result)
+    
+    @classmethod
+    def delete(cls, objectId: ObjectId):
+        databaseName = getConfig(MongoDBConfigFields.DATABASE_NAME.value, ConfigFiles.MONGO_DB_CONFIG)
+        collectionName = getConfig(MongoDBConfigFields.PUMP_COLLECTION_NAME.value, ConfigFiles.MONGO_DB_CONFIG)
+        deleteDocument(objectId, databaseName=databaseName, collectionName=collectionName)
