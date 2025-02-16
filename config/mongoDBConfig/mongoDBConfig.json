@@ -4,5 +4,8 @@
 "USERNAME": "root",
 "PASSWORD": "example",
 "DATABASE_NAME": "drink",
-"PUMP_COLLECTION_NAME": "pump"
+"PUMP_COLLECTION_NAME": "pump",
+"GLAS_COLLECTION_NAME": "glas",
+"INGREDIENTS_COLLECTION_NAME": "ingredient",
+"RECIPE_COLLECTION_NAME": "recipe"
 }

@@ -2,12 +2,11 @@ from bson import ObjectId
 from config.configFiles import ConfigFiles
 from config.configManager import getConfig
 from config.mongoDBConfig.mongoDbConfigFields import MongoDBConfigFields
+from src.models.baseModel import BaseModel
 
-from src.adapters.database_utils import deleteDocument, getDocumentById, saveDocument
+class PumpModel(BaseModel):
 
-
-class PumpModel():
-
+    COLLECTION_NAME = getConfig(MongoDBConfigFields.PUMP_COLLECTION_NAME.value, ConfigFiles.MONGO_DB_CONFIG)
     INGREDIENT_FIELD_NAME = "ingredient"
     ML_PER_SECOND_FIELD_NAME = "ml_per_second"
     PIN_NUMBER_FIELD_NAME = "pin_number_field_name"
@@ -19,12 +18,6 @@ class PumpModel():
         self._mlPerSecond = ml_per_second
         self._pinNumber = pin_number_field_name
         self._pumpType = pump_type
-
-    def getId(self) -> str:
-        return self._id
-    
-    def setId(self, _id: str) -> None:
-        self._id = _id
 
     def getIngredient(self) -> str:
         return self._ingredient
@@ -57,28 +50,4 @@ class PumpModel():
             self.PIN_NUMBER_FIELD_NAME: self._pinNumber,
             self.PUMP_TYPE_FIELD_NAME: self._pumpType
         }
-        if self._id is not None:
-            values["_id"] = str(self._id)
-        return values
-
-    def save(self) -> None:
-        databaseName = getConfig(MongoDBConfigFields.DATABASE_NAME.value, ConfigFiles.MONGO_DB_CONFIG)
-        collectionName = getConfig(MongoDBConfigFields.PUMP_COLLECTION_NAME.value, ConfigFiles.MONGO_DB_CONFIG)
-        upserResult: ObjectId = saveDocument(self.toJson(), databaseName=databaseName, collectionName=collectionName)
-        if upserResult is not None:
-            self._id = upserResult
-
-    @classmethod
-    def get(cls, objectId: ObjectId):
-        databaseName = getConfig(MongoDBConfigFields.DATABASE_NAME.value, ConfigFiles.MONGO_DB_CONFIG)
-        collectionName = getConfig(MongoDBConfigFields.PUMP_COLLECTION_NAME.value, ConfigFiles.MONGO_DB_CONFIG)
-        result: dict = getDocumentById(objectId, databaseName=databaseName, collectionName=collectionName)
-        if result is None:
-            return None
-        return PumpModel(**result)
-    
-    @classmethod
-    def delete(cls, objectId: ObjectId):
-        databaseName = getConfig(MongoDBConfigFields.DATABASE_NAME.value, ConfigFiles.MONGO_DB_CONFIG)
-        collectionName = getConfig(MongoDBConfigFields.PUMP_COLLECTION_NAME.value, ConfigFiles.MONGO_DB_CONFIG)
-        deleteDocument(objectId, databaseName=databaseName, collectionName=collectionName)
+        return self.addIdToJson(values)
