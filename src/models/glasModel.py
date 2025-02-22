@@ -27,13 +27,13 @@ class GlasModel(BaseModel):
     def getpicture(self) -> str:
         return self._picture
     
-    def setName(self, picture: str) -> None:
+    def setPicture(self, picture: str) -> None:
         self._picture = picture
 
     def getVolume(self) -> float:
         return self._volume
     
-    def setName(self, volume: float) -> None:
+    def setVolume(self, volume: float) -> None:
         self._volume = volume
 
     def toJson(self) -> dict:

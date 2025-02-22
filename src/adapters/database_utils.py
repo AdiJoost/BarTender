@@ -30,6 +30,7 @@ def _insertDocument(document: dict, databaseName: str, collectionName: str) -> a
 def _updateDocument(document: dict, databaseName: str, collectionName: str) -> any:
     collection = _getCollection(databaseName=databaseName, collectionName=collectionName)
     objectId: ObjectId = _getObjectId(document["_id"])
+    del document["_id"]
     result: UpdateResult = collection.update_one({"_id": objectId}, {"$set": document}, upsert=True)
     return result.upserted_id
 
