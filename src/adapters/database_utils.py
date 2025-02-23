@@ -12,6 +12,10 @@ def getDocumentById(objectId: str, databaseName: str, collectionName: str) -> di
     collection = _getCollection(databaseName=databaseName, collectionName=collectionName)
     return collection.find_one({"_id": objectId})
 
+def getDocuments(limit: int, offset: int, databaseName:str, collectionName: str) -> list:
+    collection = _getCollection(databaseName=databaseName, collectionName=collectionName)
+    return list(collection.find().skip(offset).limit(limit))
+
 def saveDocument(document: dict, databaseName: str, collectionName: str) -> any:
     if document.get("_id") is None:
         return _insertDocument(document, databaseName, collectionName)

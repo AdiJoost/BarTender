@@ -58,3 +58,9 @@ class GlasResource(BaseResource):
             model.setPicture(data.get(GlasModel.PICTURE_FIELD_NAME))
         if data.get(GlasModel.VOLUME_FIELD_NAME):
             model.setVolume(data.get(GlasModel.VOLUME_FIELD_NAME))
+
+class GlasesResource(BaseResource):
+
+    def get(self):
+        data = self._pagingParser().parse_args()
+        return self.handleGetMany(GlasModel, data)

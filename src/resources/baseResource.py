@@ -1,9 +1,10 @@
 from bson import ObjectId
 from bson.errors import InvalidId
-from flask import Response
+from flask import Response, jsonify
 from flask_restful import Resource, reqparse
-from typing import Type
+from typing import List, Type
 
+from src.enums.paginationOptions import PaginationOption
 from src.models.baseModel import BaseModel
 from src.api.utils import createResponse
 
@@ -42,6 +43,13 @@ class BaseResource(Resource):
             return createResponse("", 204)
         except InvalidId:
             return createResponse("", 204)
+        
+    def handleGetMany(self, modelClass: Type[BaseModel], data: dict) -> Response:
+        offset: int = data.get(PaginationOption.OFFSET.value) if data.get(PaginationOption.OFFSET.value) else 0
+        limit: int = data.get(PaginationOption.LIMIT.value) if data.get(PaginationOption.LIMIT.value) else 20
+        result: list= modelClass.getMany(limit=limit, offset=offset)
+        returnValue = [item.toJson() for item in result]
+        return createResponse(returnValue, 200)
     
     @classmethod
     def _getParser(cls) -> reqparse.RequestParser:
@@ -57,6 +65,15 @@ class BaseResource(Resource):
         parser.add_argument("_id",
                         type=str,
                         required=True)
+        return parser
+    
+    @classmethod
+    def _pagingParser(cls) -> reqparse.RequestParser:
+        parser = reqparse.RequestParser()
+        parser.add_argument(PaginationOption.OFFSET.value,
+                        type=int)
+        parser.add_argument(PaginationOption.LIMIT.value,
+                        type=int)
         return parser
 
     @classmethod
