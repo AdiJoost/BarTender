@@ -85,3 +85,9 @@ class IngredientResource(BaseResource):
             model.setPicture(data.get(IngredientModel.PICTRUE_FIELD_NAME))
         if data.get(IngredientModel.DESCRIPTION_FIELD_NAME):
             model.setDescription(data.get(IngredientModel.DESCRIPTION_FIELD_NAME))
+
+class IngredientsResource(BaseResource):
+
+    def get(self):
+        data = self._pagingParser().parse_args()
+        return self.handleGetMany(IngredientModel, data)

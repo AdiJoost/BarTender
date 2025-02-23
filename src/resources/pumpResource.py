@@ -65,3 +65,9 @@ class PumpResource(BaseResource):
             model.setPinNumber(data.get(PumpModel.PIN_NUMBER_FIELD_NAME))
         if data.get(PumpModel.PUMP_TYPE_FIELD_NAME):
             model.setPumpType(data.get(PumpModel.PUMP_TYPE_FIELD_NAME))
+
+class PumpsResource(BaseResource):
+
+    def get(self):
+        data = self._pagingParser().parse_args()
+        return self.handleGetMany(PumpModel, data)

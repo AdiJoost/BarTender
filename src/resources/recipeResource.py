@@ -62,3 +62,9 @@ class RecipeResource(BaseResource):
             model.setPicture(data.get(RecipeModel.PICTURE_FIELD_NAME))
         if data.get(RecipeModel.STEPS_FIELD_NAME):
             model.setSteps(data.get(RecipeModel.STEPS_FIELD_NAME))
+
+class RecipesResource(BaseResource):
+
+    def get(self):
+        data = self._pagingParser().parse_args()
+        return self.handleGetMany(RecipeModel, data)
