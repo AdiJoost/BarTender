@@ -1,3 +1,5 @@
+from typing import Union
+
 from src.enums.controllerType import ControllerType
 
 class StepModel():
@@ -8,9 +10,9 @@ class StepModel():
     DESCRIPTION_FIELD_NAME = "description"
     AMOUNT_FIELD_NAME = "amount"
 
-    def __init__(self, ingredient: str, controllerType: ControllerType, picture:str, description:str, amount:any) -> None:
+    def __init__(self, ingredient: str, controller_type: Union[ControllerType, str], picture:str, description:str, amount:any) -> None:
         self._ingredient = ingredient
-        self._controllerType = controllerType
+        self._controllerType = self._getControllerType(controller_type)
         self._picture = picture
         self._description = description
         self._amount = amount
@@ -48,8 +50,16 @@ class StepModel():
     def toJson(self) -> dict:
         return {
             self.INGREDIENT_FIELD_NAME: self._ingredient,
-            self.CONTROLLER_TYPE_FIELD_NAME: self._controllerType,
+            self.CONTROLLER_TYPE_FIELD_NAME: self._controllerType.value,
             self.PICTURE_FIELD_NAME: self._picture,
             self.DESCRIPTION_FIELD_NAME: self._description,
             self.AMOUNT_FIELD_NAME: self._amount
         }
+
+    def _getControllerType(self, controllerType: Union[ControllerType, str]) -> ControllerType:
+        if isinstance(controllerType, ControllerType):
+            return controllerType
+        try:
+            return ControllerType(controllerType)
+        except ValueError:
+            return None

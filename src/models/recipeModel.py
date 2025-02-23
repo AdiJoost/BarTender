@@ -1,4 +1,6 @@
 from bson import ObjectId
+from typing import Union
+
 from config.configFiles import ConfigFiles
 from config.configManager import getConfig
 from config.mongoDBConfig.mongoDbConfigFields import MongoDBConfigFields
@@ -12,10 +14,11 @@ class RecipeModel(BaseModel):
     PICTURE_FIELD_NAME = "picture"
     STEPS_FIELD_NAME = "steps"
 
-    def __init__(self, name: str, picture: str, steps: list[StepModel], _id: ObjectId=None):
+    def __init__(self, name: str, picture: str, steps: Union[list[StepModel], list[dict]], _id: ObjectId=None):
+        self._id = _id
         self._name = name
         self._picture = picture
-        self._steps = steps
+        self._steps = self._castToSteps(steps)
 
     def getName(self) -> str:
         return self._name
@@ -42,3 +45,11 @@ class RecipeModel(BaseModel):
             self.STEPS_FIELD_NAME: [step.toJson() for step in self._steps]
         }
         return self.addIdToJson(values)
+    
+    def _castToSteps(self, steps: Union[list[StepModel], list[dict]]) -> list[StepModel]:
+        if (all(isinstance(item, StepModel) for item in steps)):
+            return steps
+        try:
+            return [StepModel(**item) for item in steps if isinstance(item, dict)]
+        except Exception as e:
+            raise ValueError(f"Could not cast to Step: -> {e}")

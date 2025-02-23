@@ -5,6 +5,7 @@ from config.rootPath import getRootPath
 from src.resources.glasResource import GlasResource
 from src.resources.ingredientResource import IngredientResource
 from src.resources.pumpResource import PumpResource
+from src.resources.recipeResource import RecipeResource
 
 app = Flask(__name__)
 api = Api(app)
@@ -20,3 +21,4 @@ def hello():
 api.add_resource(PumpResource, "/pump")
 api.add_resource(GlasResource, "/glas")
 api.add_resource(IngredientResource, "/ingredient")
+api.add_resource(RecipeResource, "/recipe")
