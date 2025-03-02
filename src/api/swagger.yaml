@@ -465,7 +465,7 @@ paths:
     put:
         summary: "Update or create a Ingredient. Be carefull, if a new ingredient is created, all fields, that are not in the body are set to null."
         tags:
-          - "Ingredient"
+          - "Recipe"
         parameters:
           - name: "body"
             in: "body"
