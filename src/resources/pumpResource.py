@@ -1,6 +1,8 @@
 from typing import Type
+from flask import request
 from flask_restful import reqparse
 
+from src.enums.paginationOptions import PaginationOption
 from src.models.baseModel import BaseModel
 from src.models.pumpModel import PumpModel
 from src.resources.baseResource import BaseResource
@@ -8,8 +10,7 @@ from src.resources.baseResource import BaseResource
 class PumpResource(BaseResource):
 
     def get(self):
-        data = self._getParser().parse_args()
-        return self.handleGetResponse(PumpModel, data)
+        return self.handleGetResponse(PumpModel)
 
     def post(self):
         data = self._postParser().parse_args()
@@ -20,8 +21,7 @@ class PumpResource(BaseResource):
         return self.handlePut(PumpModel, data)
 
     def delete(self):
-        data = self._deleteParser().parse_args()
-        return self.handleDelete(PumpModel, data)
+        return self.handleDelete(PumpModel)
     
     @classmethod
     def _postParser(cls) -> reqparse.RequestParser:
@@ -69,5 +69,4 @@ class PumpResource(BaseResource):
 class PumpsResource(BaseResource):
 
     def get(self):
-        data = self._pagingParser().parse_args()
-        return self.handleGetMany(PumpModel, data)
+        return self.handleGetMany(PumpModel)

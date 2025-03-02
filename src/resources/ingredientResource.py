@@ -11,8 +11,7 @@ from src.resources.baseResource import BaseResource
 class IngredientResource(BaseResource):
 
     def get(self):
-        data = self._getParser().parse_args()
-        return self.handleGetResponse(IngredientModel, data)
+        return self.handleGetResponse(IngredientModel)
 
     def post(self):
         data = self._postParser().parse_args()
@@ -31,8 +30,7 @@ class IngredientResource(BaseResource):
         return self.handlePut(IngredientModel, data)
 
     def delete(self):
-        data = self._deleteParser().parse_args()
-        return self.handleDelete(IngredientModel, data)
+        return self.handleDelete(IngredientModel)
     
     def _assigneControllerType(self, data: dict) -> None:
         controllerTypeString = data.get(IngredientModel.CONTROLLER_TYPE_FIELD_NAME)
@@ -89,5 +87,4 @@ class IngredientResource(BaseResource):
 class IngredientsResource(BaseResource):
 
     def get(self):
-        data = self._pagingParser().parse_args()
-        return self.handleGetMany(IngredientModel, data)
+        return self.handleGetMany(IngredientModel)

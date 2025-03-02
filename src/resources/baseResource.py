@@ -1,6 +1,6 @@
 from bson import ObjectId
 from bson.errors import InvalidId
-from flask import Response, jsonify
+from flask import Response, jsonify, request
 from flask_restful import Resource, reqparse
 from typing import List, Type
 
@@ -10,9 +10,9 @@ from src.api.utils import createResponse
 
 class BaseResource(Resource):
 
-    def handleGetResponse(self, modelClass: Type[BaseModel], data: dict) -> Response:
+    def handleGetResponse(self, modelClass: Type[BaseModel]) -> Response:
         try:
-            objectId = ObjectId(data["_id"])
+            objectId = self._getObjectId()
         except InvalidId as e:
             return createResponse(str(e), 400)
         
@@ -36,20 +36,36 @@ class BaseResource(Resource):
             return createResponse(model.toJson(), 201)
         return createResponse("",204)
     
-    def handleDelete(self, modelClass: Type[BaseModel], data: dict) -> Response:
+    def handleDelete(self, modelClass: Type[BaseModel]) -> Response:
         try:
-            objectId = ObjectId(data["_id"])
+            objectId = self._getObjectId()
             modelClass.delete(objectId)
             return createResponse("", 204)
         except InvalidId:
             return createResponse("", 204)
         
-    def handleGetMany(self, modelClass: Type[BaseModel], data: dict) -> Response:
-        offset: int = data.get(PaginationOption.OFFSET.value) if data.get(PaginationOption.OFFSET.value) else 0
-        limit: int = data.get(PaginationOption.LIMIT.value) if data.get(PaginationOption.LIMIT.value) else 20
+    def handleGetMany(self, modelClass: Type[BaseModel]) -> Response:
+        try:
+            offset, limit = self._getOffsetAndLimit()
+        except ValueError:
+            return createResponse("Invalid pagination values.", 400)
         result: list= modelClass.getMany(limit=limit, offset=offset)
         returnValue = [item.toJson() for item in result]
         return createResponse(returnValue, 200)
+    
+    
+    def _getOffsetAndLimit(self) -> tuple:
+        offset = request.args.get(PaginationOption.OFFSET.value)
+        offset = int(offset) if offset else 0
+        limit = request.args.get(PaginationOption.LIMIT.value)
+        limit = int(limit) if limit else 20
+        if offset < 0 or limit < 1:
+            raise ValueError
+        return (offset, limit)
+
+    @classmethod
+    def _getObjectId(self) -> ObjectId:
+        return ObjectId(request.args.get("_id"))
     
     @classmethod
     def _getParser(cls) -> reqparse.RequestParser:
@@ -65,15 +81,6 @@ class BaseResource(Resource):
         parser.add_argument("_id",
                         type=str,
                         required=True)
-        return parser
-    
-    @classmethod
-    def _pagingParser(cls) -> reqparse.RequestParser:
-        parser = reqparse.RequestParser()
-        parser.add_argument(PaginationOption.OFFSET.value,
-                        type=int)
-        parser.add_argument(PaginationOption.LIMIT.value,
-                        type=int)
         return parser
 
     @classmethod

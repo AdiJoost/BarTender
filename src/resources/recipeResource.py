@@ -10,8 +10,7 @@ from src.resources.baseResource import BaseResource
 class RecipeResource(BaseResource):
     
     def get(self):
-        data = self._getParser().parse_args()
-        return self.handleGetResponse(RecipeModel, data)
+        return self.handleGetResponse(RecipeModel)
 
     def post(self):
         data = self._postParser().parse_args()
@@ -22,8 +21,7 @@ class RecipeResource(BaseResource):
         return self.handlePut(RecipeModel, data)
 
     def delete(self):
-        data = self._deleteParser().parse_args()
-        return self.handleDelete(RecipeModel, data)
+        return self.handleDelete(RecipeModel)
     
     @classmethod
     def _postParser(cls) -> reqparse.RequestParser:
@@ -66,5 +64,4 @@ class RecipeResource(BaseResource):
 class RecipesResource(BaseResource):
 
     def get(self):
-        data = self._pagingParser().parse_args()
-        return self.handleGetMany(RecipeModel, data)
+        return self.handleGetMany(RecipeModel)

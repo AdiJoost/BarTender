@@ -8,8 +8,7 @@ from src.resources.baseResource import BaseResource
 class GlasResource(BaseResource):
 
     def get(self):
-        data = self._getParser().parse_args()
-        return self.handleGetResponse(GlasModel, data)
+        return self.handleGetResponse(GlasModel)
 
     def post(self):
         data = self._postParser().parse_args()
@@ -20,8 +19,7 @@ class GlasResource(BaseResource):
         return self.handlePut(GlasModel, data)
 
     def delete(self):
-        data = self._deleteParser().parse_args()
-        return self.handleDelete(GlasModel, data)
+        return self.handleDelete(GlasModel)
     
     @classmethod
     def _postParser(cls) -> reqparse.RequestParser:
@@ -62,5 +60,4 @@ class GlasResource(BaseResource):
 class GlasesResource(BaseResource):
 
     def get(self):
-        data = self._pagingParser().parse_args()
-        return self.handleGetMany(GlasModel, data)
+        return self.handleGetMany(GlasModel)
