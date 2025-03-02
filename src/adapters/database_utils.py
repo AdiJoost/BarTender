@@ -16,6 +16,23 @@ def getDocuments(limit: int, offset: int, databaseName:str, collectionName: str)
     collection = _getCollection(databaseName=databaseName, collectionName=collectionName)
     return list(collection.find().skip(offset).limit(limit))
 
+def getOnlyAutomaticRecipes(databaseName:str, collectionName: str, limit: int=20, offset: int=0) -> list:
+    query = [
+        {
+            "$match": {
+                "steps": {
+                    "$not": {
+                        "$elemMatch": {"controller_type": "manualController"}
+                    }
+                }
+            }
+        },
+        {"$skip": offset},
+        {"$limit": limit} 
+    ]
+    collection = _getCollection(databaseName=databaseName, collectionName=collectionName)
+    return list(collection.aggregate(query))
+
 def saveDocument(document: dict, databaseName: str, collectionName: str) -> any:
     if document.get("_id") is None:
         return _insertDocument(document, databaseName, collectionName)

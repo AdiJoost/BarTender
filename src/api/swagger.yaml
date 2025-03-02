@@ -571,6 +571,11 @@ paths:
           type: "integer"
           description: "Maximum number of items to return"
           example: 10
+        - name: "onyl_automatic_recipes"
+          in: "query"
+          required: false
+          type: "boolean"
+          description: "If true, only recipes are returned, that have no manuel steps in them."
       responses:
         200:
           description: "List of recipes retrieved successfully"

@@ -1,8 +1,9 @@
 from typing import Type
+from flask import request
 from flask_restful import reqparse
 import json
 
-from src.api.utils import parseArgToSteps
+from src.api.utils import createResponse, parseArgToSteps
 from src.models.baseModel import BaseModel
 from src.models.recipeModel import RecipeModel
 from src.resources.baseResource import BaseResource
@@ -64,4 +65,16 @@ class RecipeResource(BaseResource):
 class RecipesResource(BaseResource):
 
     def get(self):
+        onlyAutomaticRecipes = request.args.get("onyl_automatic_recipes")
+        if onlyAutomaticRecipes == "true":
+            return self.getOnlyAutomaticRecipes()
         return self.handleGetMany(RecipeModel)
+    
+    def getOnlyAutomaticRecipes(self):
+        try:
+            offset, limit = self._getOffsetAndLimit()
+        except ValueError:
+            return createResponse("Invalid pagination values.", 400)
+        result: list= RecipeModel.getOnlyAutomatic(limit=limit, offset=offset)
+        returnValue = [item.toJson() for item in result]
+        return createResponse(returnValue, 200)

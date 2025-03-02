@@ -4,6 +4,7 @@ from typing import Union
 from config.configFiles import ConfigFiles
 from config.configManager import getConfig
 from config.mongoDBConfig.mongoDbConfigFields import MongoDBConfigFields
+from src.adapters.database_utils import getOnlyAutomaticRecipes
 from src.models.baseModel import BaseModel
 from src.models.stepModel import StepModel
 
@@ -45,6 +46,13 @@ class RecipeModel(BaseModel):
             self.STEPS_FIELD_NAME: [step.toJson() for step in self._steps]
         }
         return self.addIdToJson(values)
+    
+    @classmethod
+    def getOnlyAutomatic(cls, limit: int, offset: int) -> list:
+        result: list = getOnlyAutomaticRecipes(limit=limit, offset=offset, databaseName=cls.DATABASE_NAME, collectionName=cls.COLLECTION_NAME)
+        if result is None:
+            return None
+        return [cls(**item) for item in result]
     
     def _castToSteps(self, steps: Union[list[StepModel], list[dict]]) -> list[StepModel]:
         if (all(isinstance(item, StepModel) for item in steps)):
