@@ -7,7 +7,7 @@ BarTender is intendet to be run in a Docker Container. Therefore, you must have 
 ### Create the docker image
     docker build -t bar_tender .
 ### Run the container with a mongo-DB
-    docker-compose up d
+    docker-compose up -d
 
 ## Test the Application
 Go to http://localhost:6969/apidocs/ to access the Swagger docs and tryout the REST interface.
