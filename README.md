@@ -2,7 +2,7 @@
 This is a project for the module "NoSQL Datenbanken (cds-115) FS25".
 
 ## Setup
-BarTender is intendet to be run in a Docker Container. Therefore, you must have Docker running on your device. Ensure, that you run the commands of the 
+BarTender is intendet to be run in a Docker Container. Therefore, you must have Docker running on your device. Ensure, that you run the following commands in the rootfolder of this application. Also, it is important, that the root folder is named "BarTender" as the application determins absolute paths with this name.
 
 ### Create the docker image
     docker build -t bar_tender .
