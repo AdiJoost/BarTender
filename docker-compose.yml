@@ -10,6 +10,17 @@ services:
     volumes:
       - mongo-data:/data/db
 
+  bar_tender:
+    image: bar_tender
+    container_name: bar_tender-container
+    restart: always
+    depends_on:
+      - mongodb
+    env_file:
+      - dockerEnvironmentVariables.env
+    ports:
+      - "6969:6969"
+
 volumes:
   mongo-data:
     driver: local
