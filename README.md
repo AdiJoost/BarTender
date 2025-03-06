@@ -15,7 +15,7 @@ Go to http://localhost:6969/apidocs/ to access the Swagger docs and tryout the R
 ## Dump some example data
 This repo has some example data prepared to try out the REST Interface.
 ### Dump the data
-    docker cp ./dump mongodb-container:/data/db/dump
+    docker cp ./data/dump mongodb-container:/data/db/dump
 
 ### Restore the dump
     docker exec -it mongodb-container mongorestore --username root --password example --authenticationDatabase admin --drop /data/db/dump
