@@ -31,6 +31,14 @@ Bar Tender is a smart cocktail-making application that stores drink recipes and 
 | Ingredient      | Some default options for the user, when creating a new recipe.     |
 
 ## Notes for Module NoSQL Datenbanken (cds-115) FS25
-The App is intended to controll pumps via activation of pins on a microcontroller. However, in this version of the app, no controll is implemented and no Endpoint is available to execute a recipe. This is out of scope for the module request and will be implemented in a later version.
 
-The PUT endpoint acts as an Update as well. If the user calls the PUT with an ID that already exists in the DB, the entry is updated. If the ID does not exist or is null, a new entry is created. In that case, the ID given by the user is thrown away, as the db is responsible for choosing an adequate ID. Keep in mind, in this version, if the user PUTs a new entry and does not give all fields, the fields will be instantiated as null. This behaviour may change in the future, but is currently left like this to allow a flexible API while developing the frontend and controller.
+### App Functionality & Scope
+This application is designed to control pumps by activating specific pins on a microcontroller. However, in this version, no pump control is implemented, and no endpoint is available to execute a recipe. This functionality is out of scope for the current module request and will be added in a future release.
+
+### PUT Endpoint Behavior
+The `PUT` endpoint serves as both an **update** and **create** operation:  
+
+- **Updating an Existing Entry**: If the provided ID exists in the database, the entry is updated.  
+- **Creating a New Entry**: If the ID does not exist or is `null`, a new entry is created. However, any user-provided ID is ignored, as the database generates its own unique ID.  
+- If a user submits a `PUT` request for a new entry **without providing all fields**, missing fields will be set to `null`.  
+- This behavior may change in future versions, but it currently allows for a flexible API while the frontend and controller are still in development.  
