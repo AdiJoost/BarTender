@@ -15,7 +15,10 @@ Go to http://localhost:6969/apidocs/ to access the Swagger docs and tryout the R
 ## Dump some example data
 This repo has some example data prepared to try out the REST Interface.
 ### Dump the data
-    docker cp ./dump mongodb-container:/data/db/dump+
+    docker cp ./dump mongodb-container:/data/db/dump
+
+### Restore the dump
+    docker exec -it mongodb-container mongorestore --username root --password example --authenticationDatabase admin --drop /data/db/dump
 
 ## About the App
 Bar Tender is a smart cocktail-making application that stores drink recipes and controls pumps to automatically mix beverages. Users can create their own custom drinks by defining step-by-step instructions, including activating pumps for liquid ingredients or prompting manual actions for garnish and shaking.
@@ -34,6 +37,8 @@ Bar Tender is a smart cocktail-making application that stores drink recipes and 
 
 ### App Functionality & Scope
 This application is designed to control pumps by activating specific pins on a microcontroller. However, in this version, no pump control is implemented, and no endpoint is available to execute a recipe. This functionality is out of scope for the current module request and will be added in a future release.
+
+The Folders jupiternotebooks, log and test as well as the file dockerEnvironmentVariables.env have no functionallity in this version. They are left in, as they will have functionallity in later stages or are used for further development.
 
 ### PUT Endpoint Behavior
 The `PUT` endpoint serves as both an **update** and **create** operation:  
