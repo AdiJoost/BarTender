@@ -4,7 +4,7 @@ from config.applicationConfig.applicationConfigFields import ApplicationConfigFi
 from src.controller.pumpController.pumpController import PumpController
 
 def main():
-    pumpController = PumpController(PIN=29)
+    pumpController = PumpController(PIN=16)
     pumpController.run()
     pumpController.cleanUp()
 
